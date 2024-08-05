@@ -142,10 +142,13 @@ class Application:
                                     ("Allow", "POST"))
 
             # Parse the request
+            length = -1
             try:
                 length = int(env["CONTENT_LENGTH"])
-            except AttributeError:
-                raise HTTPException(411, "Length required.")
+            except KeyError:
+                pass
+            except ValueError:
+                pass
             if length < 0:
                 raise HTTPException(411, "Length required.")
             if length > self.MAX_LENGTH:
